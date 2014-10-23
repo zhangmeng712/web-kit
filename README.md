@@ -21,12 +21,12 @@ run commands in your shell, it will set up an internal server to show your pages
 auto loaded when your save you files in your_project_home.
 
 ```bash
-web-kit --dir your_project_home
+web-server --dir your_project_home
 ```
 
 
 ```bash
-web-kit --help //list all the params you can you
+web-server --help //list all the params you can you
 ```
 
 
