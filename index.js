@@ -14,6 +14,7 @@ module.exports = function(grunt) {
         port: lrPort
     });
     var project_dir = grunt.option('dir');
+    var isLess = grunt.option('less') == 'no' ? false: true;
     
     var watch_files = [project_dir + '/**/*.html', project_dir + '/**/*.js', project_dir + '/**/*.js', project_dir + '/**/*.less'];
     // 项目配置(任务配置)
@@ -60,18 +61,20 @@ module.exports = function(grunt) {
     });
 
     //用于监控less变化进行编译
-    grunt.event.on('watch', function(action, filepath) {
-        var fileExts = Path.extname(filepath);
-        if (fileExts == '.less') {
-            var prefix = filepath.split('.less')[0];
-            var lessObj = {};
-            lessObj[prefix + '.css'] = prefix + '.less'
-            console.log(lessObj)
-            grunt.config('less.development.files', lessObj);
-            grunt.task.run(['less']);
-        }
+    if (isLess) {
+        grunt.event.on('watch', function(action, filepath) {
+            var fileExts = Path.extname(filepath);
+            if (fileExts == '.less') {
+                var prefix = filepath.split('.less')[0];
+                var lessObj = {};
+                lessObj[prefix + '.css'] = prefix + '.less'
+                console.log(lessObj)
+                grunt.config('less.development.files', lessObj);
+                grunt.task.run(['less']);
+            }
 
-    });
+        });
+    }
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
