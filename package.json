@@ -1,0 +1,26 @@
+{
+  "name": "web-kit",
+  "description": "Toolkit for web development.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangmeng712/web-kit.git"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
+  "version": "0.0.1",
+  "author": "Zhang Meng <sifei.zm@taobao.com>",
+  "contributors": [],
+  "dependencies": {
+    "commander": "~2.2.0",
+    "grunt": "",
+    "grunt-contrib-connect": "",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-less": "",
+    "connect-livereload": ""
+  },
+  "bin": {
+      "web-server": "bin/web-server"
+  }
+}

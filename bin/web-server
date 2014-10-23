@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+/**
+ * web-server bin wrap the grunt commond
+ * require on grunt-cli 
+ * you should first exec "npm intall -g grunt-cli"(TODO replace to local grunt)
+ */
+
+var program = require('commander');
+var path = require('path');
+
+var SEP = path.sep;
+
+program
+  .version('0.0.1')
+  .option('-d --dir [dir]', 'your server files loacated dir')
+  .option('-a --auto [auto]', 'Is need auto load your web page with code change, default yes')
+  .option('-l --less [less]', 'Is need auto compile your changed less code, default yes')
+
+program.on('--help', function() {
+  console.log('  Examples:')
+  console.log('')
+  console.log('    $ web-server')
+  console.log('    $ web-server  --auto no')
+  console.log('    $ web-server  --less no')
+  console.log('')
+})
+
+program.parse(process.argv);
+
+var shell = require('../libs/shellhelper');
+var node_cmd_path = path.join(__dirname , '../');
+var SPACE = ' ';
+var dir = program.dir || process.cwd();
+var auto = program.auto || true;
+var less = program.less || true;
+
+
+// grunt live --base xxx --dir xxxxx --auto xxx --less true
+var grunt_cmd = ['grunt', 'live', '--base', node_cmd_path, '--dir', dir, '--less', less, '--gruntfile', 'index.js'].join(SPACE); 
+console.log('exec: ' + grunt_cmd);
+shell.exec(grunt_cmd, node_cmd_path);
+
+
+
+
+
