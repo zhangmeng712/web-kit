@@ -3,7 +3,6 @@
  * @fileOverview web-kit base workflow based on grunt http://gruntjs.com/
  */
 module.exports = function(grunt) {
-
     var lrPort = 35729;
     var Path = require('path');
     var SEP =Path.sep;
@@ -15,34 +14,45 @@ module.exports = function(grunt) {
     });
     var project_dir = grunt.option('dir');
     var isLess = grunt.option('less') == 'no' ? false: true;
-    
+    var index = grunt.option('index') || 'index.html';
+    var port = grunt.option('port') || 3000;
+    var HOST_NAME = 'localhost';
+    var target = 'http://' + HOST_NAME +':' + port + '/' + index;
     var watch_files = [project_dir + '/**/*.html', project_dir + '/**/*.js', project_dir + '/**/*.js', project_dir + '/**/*.less'];
+    var mid_file = grunt.option('middleware') || null;
+
+    var middlewares = function(connect, options, middlewares) {
+        var midArr = [require('connect-livereload')({
+                port: lrPort
+            }),connect.static(project_dir)];
+            if (Fs.existsSync(mid_file)) {
+                var selfMid = require(mid_file);
+                midArr.push(selfMid);
+            } else {
+                console.log('the middleware file not exist');
+            }
+        return midArr;
+    };
+    
+     
     // 项目配置(任务配置)
     grunt.initConfig({
         // 通过connect任务，创建一个静态服务器
         connect: {
             options: {
                 // 服务器端口号
-                port: 3000,
+                port: port,
                 // 服务器地址(可以使用主机名localhost，也能使用IP)
-                hostname: 'localhost'
+                hostname: HOST_NAME
             },
             
             livereload: {
                 options: {
                     open: {
-                        target: 'http://localhost:3000/'
-                       
+                        target: target
                     },
                     // 通过LiveReload脚本，让页面重新加载。
-                    middleware: function(connect, options, middlewares) {
-                        return [
-                            require('connect-livereload')({
-                                port: lrPort
-                            }),
-                            connect.static(project_dir)
-                        ];
-                    }
+                    middleware: middlewares
                 }
             }
         },

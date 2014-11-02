@@ -1,7 +1,7 @@
 {
   "name": "web-kit",
   "description": "Toolkit for web development.",
-  "version": "0.0.2",
+  "version": "0.2.0",
   "author": {
     "name": "zhangmeng712@gmail.com",
     "url": "https://github.com/zhangmeng712/"
@@ -10,7 +10,6 @@
     "type": "git",
     "url": "https://github.com/zhangmeng712/web-kit.git"
   },
-  "version": "0.1.0",
   "contributors": [],
   "dependencies": {
     "commander": "~2.2.0",

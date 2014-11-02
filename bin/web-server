@@ -16,6 +16,9 @@ program
   .option('-d --dir [dir]', 'your server files loacated dir')
   .option('-a --auto [auto]', 'Is need auto load your web page with code change, default yes')
   .option('-l --less [less]', 'Is need auto compile your changed less code, default yes')
+  .option('-p --port [port]', 'The port you want to run on default is 3000')
+  .option('-i --index [index]', 'The entrance x.html you want browser to open')
+  .option('-m --middleware [middleware]', 'middleware file path that can be used for connect')
 
 program.on('--help', function() {
   console.log('  Examples:')
@@ -34,10 +37,13 @@ var SPACE = ' ';
 var dir = program.dir || process.cwd();
 var auto = program.auto || true;
 var less = program.less || true;
+var port = program.port || 3000;
+var index = program.index || 'index.html';
+var middleware = program.middleware;
 
 
 // grunt live --base xxx --dir xxxxx --auto xxx --less true
-var grunt_cmd = ['grunt', 'live', '--base', node_cmd_path, '--dir', dir, '--less', less, '--gruntfile', 'index.js'].join(SPACE); 
+var grunt_cmd = ['grunt', 'live', '--base', node_cmd_path, '--dir', dir, '--less', less, '--gruntfile', 'index.js', '--port', port, '--index', index, '--middleware', middleware].join(SPACE); 
 console.log('exec: ' + grunt_cmd);
 shell.exec(grunt_cmd, node_cmd_path);
 
